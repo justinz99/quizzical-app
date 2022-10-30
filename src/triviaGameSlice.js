@@ -46,8 +46,6 @@ const triviaGameSlice = createSlice({
                 } 
             }
         },
-
-        // reset questions data for new game
         resetTrivia: () => {
             return initialState
         }
@@ -57,14 +55,6 @@ const triviaGameSlice = createSlice({
 export const triviaGameReducer = triviaGameSlice.reducer
 export const { addQuestions, selectAnswer, resetTrivia } = triviaGameSlice.actions
 
-export const selectQuestions = (state) => {
-    return state.triviaGame.questionsArray
-}
-
 export const selectQuestionsById = (id) => (state) => {
     return state.triviaGame.questionsArray.find(question => question.id === id)
-}
-
-export const selectScore = (state) => {
-    return state.triviaGame.score
 }

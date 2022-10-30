@@ -17,6 +17,8 @@ export default function SelectTriviaForm() {
         }
     )
 
+    const [buttonText, setButtonText] = useState('Fetch Questions')
+
     function fillQuestionsFilter(e) {
         const {name, value} = e.target
         setQuestionsFilter(prevQuestionsFilter => ({
@@ -27,6 +29,7 @@ export default function SelectTriviaForm() {
 
     function handleClick(e) {
         e.preventDefault()
+        setButtonText('Loading...')
 
         // make fetch URL
         let apiURL = 'https://opentdb.com/api.php?amount='+questionFilter.numQuestions
@@ -40,9 +43,6 @@ export default function SelectTriviaForm() {
             apiURL = apiURL+'&type='+questionFilter.type
         }
         
-        // fetch(apiURL)
-            // .then(res => res.json())
-            // .then(data => dispatch(addQuestions(data.results)))
 
         async function fetchQuestions() {
             try {
@@ -59,7 +59,9 @@ export default function SelectTriviaForm() {
         fetchQuestions()
         
         // start the game
-        dispatch(switchGameStatus('in-game'))
+        setTimeout(() => {
+            dispatch(switchGameStatus('in-game'))
+        }, 3000)
     }
 
     return (
@@ -109,7 +111,7 @@ export default function SelectTriviaForm() {
                 <option value="multiple">Multiple Choice</option>
                 <option value="boolean">True / False</option>
             </select>
-            <button onClick={handleClick}>Start Quiz</button>
+            <button onClick={handleClick}>{buttonText}</button>
         </form>
     )
 }
